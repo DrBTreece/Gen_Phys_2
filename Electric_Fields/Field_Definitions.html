@@ -1,0 +1,177 @@
+<html>
+<title>Charges Create Fields</title>
+<head>
+    <h1>Charges Create Fields</h1>
+</head>
+<style>
+    .flex-container {
+      /* We first create a flex layout context */
+      display: flex;
+      
+      /* Then we define the flow direction
+         and if we allow the items to wrap
+       * Remember this is the same as:
+       * flex-direction: row;
+       * flex-wrap: wrap;
+       */
+      flex-flow: row wrap;
+      
+      /* Then we define how is distributed the remaining space */
+      /*justify-content: space-around;*/
+      
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .slidecontainer {
+      width: 30%; /* Width of the outside container */
+      flex: 1 auto;
+    }
+    .slidecontainer2 {
+        width: 10%; /* Width of the outside container */
+        flex: 1 auto;
+      }
+    .bottom-one {
+       margin-bottom: 1cm;
+    }
+</style>
+<body>
+    <div>
+      <p>Charges come in two types, positive and negative. 
+        These charges interact with each other: one charge pushes or pulls on another depending on the types of each charge involved.
+        In physics, we say this is because a charge creates an electric that communicates its influence.
+    </p>
+    </div>
+    <div>
+      <p>
+        A positive charge creates a field that points away from itself.
+    </p>
+    </div>
+    <canvas id="Hydrogen" width="400" height="400"></canvas>
+    <div>
+      <p>
+        A negative charge creates a field that points toward itself.
+    </p>
+    </div>
+    <canvas id="Electron" width="400" height="400"></canvas>
+</body>
+<script>
+    var Canvas1 = document.getElementById("Hydrogen");
+    var Canvas2 = document.getElementById("Electron");
+    var ctx1 = Canvas1.getContext('2d');
+    var ctx2 = Canvas2.getContext('2d');
+
+    var WIDTH = Canvas1.width;
+    var HEIGHT = Canvas1.height;
+    Canvas2.width=WIDTH;
+    Canvas2.height=HEIGHT;
+
+    var orbital_Radius=100;
+
+    function draw_arrow(x,y, dx, dy, ctx, color='#000000') {
+        let arrow_directon = Math.atan2(dy, dx);
+        let arrhd_dx1 = 15*Math.cos(arrow_directon + 5*Math.PI/6);
+        let arrhd_dy1 = 15*Math.sin(arrow_directon + 5*Math.PI/6);
+        let arrhd_dx2 = 15*Math.cos(arrow_directon - 5*Math.PI/6);
+        let arrhd_dy2 = 15*Math.sin(arrow_directon - 5*Math.PI/6);
+
+        ctx.strokeStyle=color;
+        ctx.lineWidth=2;
+        ctx.beginPath();
+        ctx.moveTo(x,y);
+        ctx.lineTo(x+dx, y+dy);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(x + dx + arrhd_dx1, y + dy + arrhd_dy1);
+        ctx.lineTo(x+dx, y+dy);
+        ctx.lineTo(x + dx + arrhd_dx2, y + dy + arrhd_dy2);
+        ctx.stroke();
+    }
+
+    function draw_H() {
+        ctx1.beginPath();
+        ctx1.arc(WIDTH/2, HEIGHT/2, 10, 0, 2*Math.PI);
+        ctx1.fillStyle='#DD4444';
+        ctx1.fill();
+        
+        ctx1.font = "20px Times";
+        ctx1.fillStyle='#FFFFFF';
+        ctx1.textBaseline='middle';
+        ctx1.textAlign='center';
+        ctx1.fillText("+", WIDTH/2, HEIGHT/2);
+    }
+
+    function draw_ring_of_field_H(){
+        for (i = 0; i< 2*Math.PI; i+= Math.PI/10) {
+            draw_arrow(WIDTH/2 + orbital_Radius*Math.cos(i), HEIGHT/2 + orbital_Radius*Math.sin(i), 50*Math.cos(i), 50*Math.sin(i), ctx1, color='#DD4444');
+        }
+
+        ctx1.font = "20px Times";
+        ctx1.fillStyle='#DD4444';
+        ctx1.textBaseline='middle';
+        ctx1.textAlign='left';
+        ctx1.fillText("E", WIDTH/2 + 155, HEIGHT/2);
+
+    }
+
+    function draw_e() {
+        ctx2.beginPath();
+        ctx2.arc(WIDTH/2, HEIGHT/2, 10, 0, 2*Math.PI);
+        ctx2.fillStyle='#444444';
+        ctx2.fill();
+        
+        ctx2.font = "20px Times";
+        ctx2.fillStyle='#FFFFFF';
+        ctx2.textBaseline='middle';
+        ctx2.textAlign='center';
+        ctx2.fillText("-", WIDTH/2, HEIGHT/2);
+    }
+
+    function draw_ring_of_field_e(){
+        for (i = 0; i< 2*Math.PI; i+= Math.PI/10) {
+            draw_arrow(WIDTH/2 + 1.5*orbital_Radius*Math.cos(i), HEIGHT/2 + 1.5*orbital_Radius*Math.sin(i), -50*Math.cos(i), -50*Math.sin(i), ctx2, color='#444444');
+        }
+
+        ctx2.font = "20px Times";
+        ctx2.fillStyle='#444444';
+        ctx2.textBaseline='middle';
+        ctx2.textAlign='right';
+        ctx2.fillText("E", WIDTH/2 + 45, HEIGHT/2);
+
+    }
+
+    function init() {
+        draw_H();
+        draw_ring_of_field_H();
+        draw_e();
+        draw_ring_of_field_e();
+    }
+    init();
+
+
+
+
+
+
+    // let lastTime = null;
+    // function frame(time) {
+    //     if (lastTime != null) {
+    //         updateAnimation(Math.min(100, time - lastTime) / 1000);
+
+    //         elec_Theta += 0.01;
+    //     }
+    //     lastTime = time;
+    //     requestAnimationFrame(frame);
+    // }
+    // requestAnimationFrame(frame);
+
+
+    // function updateAnimation(step) {
+    //     ctx.clearRect(0,0,WIDTH,HEIGHT);
+    //     draw_H();
+    //     draw_ring_of_field_H();
+    // }
+
+</script>
+</html>

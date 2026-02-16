@@ -1,6 +1,7 @@
 <html>
 <title>General Physics II Homepage</title>
 <head>
+    <h1>General Physics II Homepage</h1>
 </head>
 <style>
     .flex-container {
@@ -35,6 +36,76 @@
     }
 </style>
 <body>
-  This webpage is a companion to the Phys 202 course.
+    <div>
+      <p>This webpage is a companion to the Phys 202 course.</p>
+    </div>
+    <canvas id="Hydrogen" width="400" height="400"></canvas>
 </body>
+<script>
+    var Canvas = document.getElementById("Hydrogen");
+    var ctx = Canvas.getContext('2d');
+
+    var WIDTH = Canvas.width;
+    var HEIGHT = Canvas.height;
+
+    var elec_Theta = 0;
+
+    function draw_H() {
+        ctx.beginPath();
+        ctx.arc(WIDTH/2, HEIGHT/2, 10, 0, 2*Math.PI);
+        ctx.fillStyle='#DD4444';
+        ctx.fill();
+        
+        ctx.font = "20px Times";
+        ctx.fillStyle='#FFFFFF';
+        ctx.textBaseline='middle';
+        ctx.textAlign='center';
+        ctx.fillText("+", WIDTH/2, HEIGHT/2);
+    }
+
+    function draw_elec(theta) {
+        let x = 100*Math.cos(theta);
+        let y = 100*Math.sin(theta);
+        ctx.beginPath();
+        ctx.arc(WIDTH/2 + x, HEIGHT/2 - y, 10, 0, 2*Math.PI);
+        ctx.fillStyle='#444444';
+        ctx.fill();
+        
+        ctx.font = "20px Times";
+        ctx.fillStyle='#FFFFFF';
+        ctx.textBaseline='middle';
+        ctx.textAlign='center';
+        ctx.fillText("-", WIDTH/2 + x, HEIGHT/2 - y);
+    }
+
+    function init() {
+        draw_H();
+    }
+    init();
+
+
+
+
+
+
+    let lastTime = null;
+    function frame(time) {
+        if (lastTime != null) {
+            updateAnimation(Math.min(100, time - lastTime) / 1000);
+
+            elec_Theta += 0.01;
+        }
+        lastTime = time;
+        requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+
+
+    function updateAnimation(step) {
+        ctx.clearRect(0,0,WIDTH,HEIGHT);
+        draw_H();
+        draw_elec(elec_Theta);
+    }
+
+</script>
 </html>

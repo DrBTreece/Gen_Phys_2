@@ -119,7 +119,7 @@
 
     function draw_ring_of_field(){
         for (i = 0; i< 2*Math.PI; i+= Math.PI/10) {
-            draw_Arrow_STD(WIDTH/2 + orbital_Radius*Math.cos(i), HEIGHT/2 + orbital_Radius*Math.sin(i), 50*Math.cos(i), 50*Math.sin(i), color='#DD4444');
+            draw_Arrow_STD(WIDTH/2 + orbital_Radius*Math.cos(i), HEIGHT/2 + orbital_Radius*Math.sin(i), 50*Math.cos(i), 50*Math.sin(i), ctx, color='#DD4444');
         }
 
         ctx.font = "20px Times";
@@ -136,7 +136,7 @@
         let dx = -50*Math.cos(theta);
         let dy = -50*Math.sin(theta);
 
-        draw_Arrow_STD(WIDTH/2 + x, HEIGHT/2 - y, dx, -dy, color='#444444');
+        draw_Arrow_STD(WIDTH/2 + x, HEIGHT/2 - y, dx, -dy, ctx, color='#444444');
 
         
 
@@ -154,7 +154,7 @@
         let dx = -50*Math.sin(theta);
         let dy = 50*Math.cos(theta);
 
-        draw_Arrow_STD(WIDTH/2 + x, HEIGHT/2 - y, dx, -dy, color='#444444');
+        draw_Arrow_STD(WIDTH/2 + x, HEIGHT/2 - y, dx, -dy, ctx, color='#444444');
 
         
 
@@ -167,7 +167,7 @@
     }
 
     function init() {
-        draw_POS_CHG(WIDTH/2, HEIGHT/2);
+        draw_POS_CHG(WIDTH/2, HEIGHT/2, ctx);
     }
     init();
 
@@ -191,11 +191,11 @@
 
     function updateAnimation(step) {
         ctx.clearRect(0,0,WIDTH,HEIGHT);
-        draw_POS_CHG(WIDTH/2, HEIGHT/2);
+        draw_POS_CHG(WIDTH/2, HEIGHT/2, ctx);
         draw_ring_of_field();
         draw_Electron_Force(elec_Theta);
         draw_Electron_Velocity(elec_Theta);
-        draw_NEG_CHG(WIDTH/2 + orbital_Radius*Math.cos(elec_Theta), HEIGHT/2 - orbital_Radius*Math.sin(elec_Theta));
+        draw_NEG_CHG(WIDTH/2 + orbital_Radius*Math.cos(elec_Theta), HEIGHT/2 - orbital_Radius*Math.sin(elec_Theta), ctx);
     }
 
 </script>

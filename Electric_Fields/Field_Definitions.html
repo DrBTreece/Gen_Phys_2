@@ -54,98 +54,41 @@
     </p>
     </div>
     <canvas id="Electron" width="400" height="400"></canvas>
+    <div>
+      <p>
+        As you get farther from a charge, the field decreases in strength. When drawing vectors, the length of an arrow indicates the magnitude.
+    </p>
+    </div>
+    <canvas id="Decaying_Field" width="400" height="400"></canvas>
 </body>
+<script type="text/javascript" src="../src/draw_commands.js"></script>
 <script>
     var Canvas1 = document.getElementById("Hydrogen");
     var Canvas2 = document.getElementById("Electron");
+    var Canvas3 = document.getElementById("Decaying_Field");
     var ctx1 = Canvas1.getContext('2d');
     var ctx2 = Canvas2.getContext('2d');
+    var ctx3 = Canvas3.getContext('2d');
 
     var WIDTH = Canvas1.width;
     var HEIGHT = Canvas1.height;
     Canvas2.width=WIDTH;
     Canvas2.height=HEIGHT;
-
-    var orbital_Radius=100;
-
-    function draw_arrow(x,y, dx, dy, ctx, color='#000000') {
-        let arrow_directon = Math.atan2(dy, dx);
-        let arrhd_dx1 = 15*Math.cos(arrow_directon + 5*Math.PI/6);
-        let arrhd_dy1 = 15*Math.sin(arrow_directon + 5*Math.PI/6);
-        let arrhd_dx2 = 15*Math.cos(arrow_directon - 5*Math.PI/6);
-        let arrhd_dy2 = 15*Math.sin(arrow_directon - 5*Math.PI/6);
-
-        ctx.strokeStyle=color;
-        ctx.lineWidth=2;
-        ctx.beginPath();
-        ctx.moveTo(x,y);
-        ctx.lineTo(x+dx, y+dy);
-        ctx.stroke();
-        
-        ctx.beginPath();
-        ctx.moveTo(x + dx + arrhd_dx1, y + dy + arrhd_dy1);
-        ctx.lineTo(x+dx, y+dy);
-        ctx.lineTo(x + dx + arrhd_dx2, y + dy + arrhd_dy2);
-        ctx.stroke();
-    }
-
-    function draw_H() {
-        ctx1.beginPath();
-        ctx1.arc(WIDTH/2, HEIGHT/2, 10, 0, 2*Math.PI);
-        ctx1.fillStyle='#DD4444';
-        ctx1.fill();
-        
-        ctx1.font = "20px Times";
-        ctx1.fillStyle='#FFFFFF';
-        ctx1.textBaseline='middle';
-        ctx1.textAlign='center';
-        ctx1.fillText("+", WIDTH/2, HEIGHT/2);
-    }
-
-    function draw_ring_of_field_H(){
-        for (i = 0; i< 2*Math.PI; i+= Math.PI/10) {
-            draw_arrow(WIDTH/2 + orbital_Radius*Math.cos(i), HEIGHT/2 + orbital_Radius*Math.sin(i), 50*Math.cos(i), 50*Math.sin(i), ctx1, color='#DD4444');
-        }
-
-        ctx1.font = "20px Times";
-        ctx1.fillStyle='#DD4444';
-        ctx1.textBaseline='middle';
-        ctx1.textAlign='left';
-        ctx1.fillText("E", WIDTH/2 + 155, HEIGHT/2);
-
-    }
-
-    function draw_e() {
-        ctx2.beginPath();
-        ctx2.arc(WIDTH/2, HEIGHT/2, 10, 0, 2*Math.PI);
-        ctx2.fillStyle='#444444';
-        ctx2.fill();
-        
-        ctx2.font = "20px Times";
-        ctx2.fillStyle='#FFFFFF';
-        ctx2.textBaseline='middle';
-        ctx2.textAlign='center';
-        ctx2.fillText("-", WIDTH/2, HEIGHT/2);
-    }
-
-    function draw_ring_of_field_e(){
-        for (i = 0; i< 2*Math.PI; i+= Math.PI/10) {
-            draw_arrow(WIDTH/2 + 1.5*orbital_Radius*Math.cos(i), HEIGHT/2 + 1.5*orbital_Radius*Math.sin(i), -50*Math.cos(i), -50*Math.sin(i), ctx2, color='#444444');
-        }
-
-        ctx2.font = "20px Times";
-        ctx2.fillStyle='#444444';
-        ctx2.textBaseline='middle';
-        ctx2.textAlign='right';
-        ctx2.fillText("E", WIDTH/2 + 45, HEIGHT/2);
-
-    }
+    Canvas3.width=WIDTH;
+    Canvas3.height=HEIGHT;
 
     function init() {
-        draw_H();
-        draw_ring_of_field_H();
-        draw_e();
-        draw_ring_of_field_e();
+        draw_POS_CHG(WIDTH/2, HEIGHT/2, ctx1);
+        draw_radial_field_ring(WIDTH/2, HEIGHT/2, 100, 50, 20, ctx1, color='#DD4444');
+        draw_NEG_CHG(WIDTH/2, HEIGHT/2, ctx2);
+        draw_radial_field_ring(WIDTH/2, HEIGHT/2, 150, -50, 20, ctx2, color='#444444');
+        
+        ////////////
+        draw_POS_CHG(WIDTH/2, HEIGHT/2, ctx3);
+        draw_radial_field_ring(WIDTH/2, HEIGHT/2, 20, 75, 10, ctx3, color='#DD4444');
+        draw_radial_field_ring(WIDTH/2, HEIGHT/2, 105, 40, 20, ctx3, color='#DD4444');
+        draw_radial_field_ring(WIDTH/2, HEIGHT/2, 155, 25, 30, ctx3, color='#DD4444');
+        ////////////
     }
     init();
 

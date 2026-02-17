@@ -40,10 +40,24 @@
       <p>This webpage is a companion to the Phys 202 course.</p>
     </div>
     <canvas id="Hydrogen" width="400" height="400"></canvas>
-    <div>
-        <a href="/Electric_Fields/Field_Definitions.html">Definition of Electric Field</a>
-    </div>
+    <!--
+    
+    
+    
+    
+    -->
+    <nav class="toc" aria-labelledby="toc-label">
+	<h2 id="toc-label">Course Contents</h2>
+	<ul>
+		<li>Charges and Fields
+            <ul>
+                <li><a href="/Electric_Fields/Field_Definitions.html">Electric Fields and Forces</a></li>
+            </ul>
+        </li>
+	</ul>
+</nav>
 </body>
+<script type="text/javascript" src="src/draw_commands.js"></script>
 <script>
     var Canvas = document.getElementById("Hydrogen");
     var ctx = Canvas.getContext('2d');
@@ -54,58 +68,58 @@
     var elec_Theta = 0;
     var orbital_Radius = 100;
 
-    function draw_arrow(x,y, dx, dy, color='#000000') {
-        let arrow_directon = Math.atan2(dy, dx);
-        let arrhd_dx1 = 15*Math.cos(arrow_directon + 5*Math.PI/6);
-        let arrhd_dy1 = 15*Math.sin(arrow_directon + 5*Math.PI/6);
-        let arrhd_dx2 = 15*Math.cos(arrow_directon - 5*Math.PI/6);
-        let arrhd_dy2 = 15*Math.sin(arrow_directon - 5*Math.PI/6);
+    // function draw_arrow(x,y, dx, dy, color='#000000') {
+    //     let arrow_directon = Math.atan2(dy, dx);
+    //     let arrhd_dx1 = 15*Math.cos(arrow_directon + 5*Math.PI/6);
+    //     let arrhd_dy1 = 15*Math.sin(arrow_directon + 5*Math.PI/6);
+    //     let arrhd_dx2 = 15*Math.cos(arrow_directon - 5*Math.PI/6);
+    //     let arrhd_dy2 = 15*Math.sin(arrow_directon - 5*Math.PI/6);
 
-        ctx.strokeStyle=color;
-        ctx.lineWidth=2;
-        ctx.beginPath();
-        ctx.moveTo(x,y);
-        ctx.lineTo(x+dx, y+dy);
-        ctx.stroke();
+    //     ctx.strokeStyle=color;
+    //     ctx.lineWidth=2;
+    //     ctx.beginPath();
+    //     ctx.moveTo(x,y);
+    //     ctx.lineTo(x+dx, y+dy);
+    //     ctx.stroke();
         
-        ctx.beginPath();
-        ctx.moveTo(x + dx + arrhd_dx1, y + dy + arrhd_dy1);
-        ctx.lineTo(x+dx, y+dy);
-        ctx.lineTo(x + dx + arrhd_dx2, y + dy + arrhd_dy2);
-        ctx.stroke();
-    }
+    //     ctx.beginPath();
+    //     ctx.moveTo(x + dx + arrhd_dx1, y + dy + arrhd_dy1);
+    //     ctx.lineTo(x+dx, y+dy);
+    //     ctx.lineTo(x + dx + arrhd_dx2, y + dy + arrhd_dy2);
+    //     ctx.stroke();
+    // }
 
-    function draw_H() {
-        ctx.beginPath();
-        ctx.arc(WIDTH/2, HEIGHT/2, 10, 0, 2*Math.PI);
-        ctx.fillStyle='#DD4444';
-        ctx.fill();
+    // function draw_H() {
+    //     ctx.beginPath();
+    //     ctx.arc(WIDTH/2, HEIGHT/2, 10, 0, 2*Math.PI);
+    //     ctx.fillStyle='#DD4444';
+    //     ctx.fill();
         
-        ctx.font = "20px Times";
-        ctx.fillStyle='#FFFFFF';
-        ctx.textBaseline='middle';
-        ctx.textAlign='center';
-        ctx.fillText("+", WIDTH/2, HEIGHT/2);
-    }
+    //     ctx.font = "20px Times";
+    //     ctx.fillStyle='#FFFFFF';
+    //     ctx.textBaseline='middle';
+    //     ctx.textAlign='center';
+    //     ctx.fillText("+", WIDTH/2, HEIGHT/2);
+    // }
 
-    function draw_elec(theta) {
-        let x = orbital_Radius*Math.cos(theta);
-        let y = orbital_Radius*Math.sin(theta);
-        ctx.beginPath();
-        ctx.arc(WIDTH/2 + x, HEIGHT/2 - y, 10, 0, 2*Math.PI);
-        ctx.fillStyle='#444444';
-        ctx.fill();
+    // function draw_elec(theta) {
+    //     let x = orbital_Radius*Math.cos(theta);
+    //     let y = orbital_Radius*Math.sin(theta);
+    //     ctx.beginPath();
+    //     ctx.arc(WIDTH/2 + x, HEIGHT/2 - y, 10, 0, 2*Math.PI);
+    //     ctx.fillStyle='#444444';
+    //     ctx.fill();
         
-        ctx.font = "20px Times";
-        ctx.fillStyle='#FFFFFF';
-        ctx.textBaseline='middle';
-        ctx.textAlign='center';
-        ctx.fillText("-", WIDTH/2 + x, HEIGHT/2 - y);
-    }
+    //     ctx.font = "20px Times";
+    //     ctx.fillStyle='#FFFFFF';
+    //     ctx.textBaseline='middle';
+    //     ctx.textAlign='center';
+    //     ctx.fillText("-", WIDTH/2 + x, HEIGHT/2 - y);
+    // }
 
     function draw_ring_of_field(){
         for (i = 0; i< 2*Math.PI; i+= Math.PI/10) {
-            draw_arrow(WIDTH/2 + orbital_Radius*Math.cos(i), HEIGHT/2 + orbital_Radius*Math.sin(i), 50*Math.cos(i), 50*Math.sin(i), color='#DD4444');
+            draw_Arrow_STD(WIDTH/2 + orbital_Radius*Math.cos(i), HEIGHT/2 + orbital_Radius*Math.sin(i), 50*Math.cos(i), 50*Math.sin(i), ctx, color='#DD4444');
         }
 
         ctx.font = "20px Times";
@@ -122,7 +136,7 @@
         let dx = -50*Math.cos(theta);
         let dy = -50*Math.sin(theta);
 
-        draw_arrow(WIDTH/2 + x, HEIGHT/2 - y, dx, -dy, color='#444444');
+        draw_Arrow_STD(WIDTH/2 + x, HEIGHT/2 - y, dx, -dy, ctx, color='#444444');
 
         
 
@@ -140,7 +154,7 @@
         let dx = -50*Math.sin(theta);
         let dy = 50*Math.cos(theta);
 
-        draw_arrow(WIDTH/2 + x, HEIGHT/2 - y, dx, -dy, color='#444444');
+        draw_Arrow_STD(WIDTH/2 + x, HEIGHT/2 - y, dx, -dy, ctx, color='#444444');
 
         
 
@@ -153,7 +167,7 @@
     }
 
     function init() {
-        draw_H();
+        draw_POS_CHG(WIDTH/2, HEIGHT/2, ctx);
     }
     init();
 
@@ -177,11 +191,11 @@
 
     function updateAnimation(step) {
         ctx.clearRect(0,0,WIDTH,HEIGHT);
-        draw_H();
+        draw_POS_CHG(WIDTH/2, HEIGHT/2, ctx);
         draw_ring_of_field();
         draw_Electron_Force(elec_Theta);
         draw_Electron_Velocity(elec_Theta);
-        draw_elec(elec_Theta);
+        draw_NEG_CHG(WIDTH/2 + orbital_Radius*Math.cos(elec_Theta), HEIGHT/2 - orbital_Radius*Math.sin(elec_Theta), ctx);
     }
 
 </script>

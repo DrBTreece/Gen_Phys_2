@@ -1,7 +1,13 @@
 <html>
 <title>Charges Create Fields</title>
 <head>
-    <h1>Charges Create Fields</h1>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>MathJax example</title>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
+  </script>
+  <h1>Charges Create Fields</h1>
 </head>
 <style>
     .flex-container {
@@ -40,6 +46,7 @@
       <p>Charges come in two types, positive and negative. 
         These charges interact with each other: one charge pushes or pulls on another depending on the types of each charge involved.
         In physics, we say this is because a charge creates an electric that communicates its influence.
+        \[\vec{E}: \hspace{0.25cm} \mbox{Electric Field Vector}\]
     </p>
     </div>
     <div>
@@ -60,6 +67,21 @@
     </p>
     </div>
     <canvas id="Decaying_Field" width="400" height="400"></canvas>
+    <div>
+        <p>
+            Though it would be difficult to show, every point in space has its own electric field. This is the defining feature of any field in physics, every point gets assigned a value.
+        </p>
+        <p>
+            The electric field magnitude and distance from the charge have an <b>inverse square</b> relationship:
+            \[ \Big| \vec{E} \, \Big| = \frac{| q | }{4 \pi \epsilon_0 \, r^2} \]
+            In this formula, the amount of charge is represented by \(q\) and the symbol \( \epsilon_0 = 8.85 \times 10^{-12} \, C^2/ N \, m^2 \) is a physical constant.
+        </p>
+        <p>
+            The smallest quantum of charge attainable for an object is called the <b><i>elementary charge:</i></b>
+            \[e = 1.6 \times 10^{-19} \, C\]
+            This is the charge of a proton and an electron; the proton is postive and the electron is negative.
+        </p>
+    </div>
 </body>
 <script type="text/javascript" src="../src/draw_commands.js"></script>
 <script>

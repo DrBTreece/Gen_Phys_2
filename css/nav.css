@@ -1,0 +1,80 @@
+.fa,.fab,.fad,.fal,.far,.fas {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1
+}
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-bar {
+  text-align: center;
+  font-size: 16px;
+  width: 100%;
+  background: white;
+  padding: 15px 0 0 0;
+  z-index: 1 /* make sure math goes under... */
+}
+.nav-bar-link-spacer {
+    display:inline-block;
+    width:15px;
+}
+
+
+
+.menu-prev {
+  color: rgb(43, 43, 188) !important;
+}
+.menu-next {
+  color: rgb(43, 43, 188) !important;
+}
+
+
+
+.fa-chevron-left:before {
+    content: "\276E"
+}
+.fa-chevron-right:after {
+    content: "\276F"
+}
+
+
+
+
+.nav_desktop_extra {
+    display: inline;
+    color: rgb(43, 43, 188) !important;
+    border-radius: 5px;
+    border-style: double;
+    padding: 2px;
+}
+.nav_desktop_extra-null {
+    display: inline;
+    color: rgb(188, 188, 188) !important;
+}
+
+
+
+
+.problems {
+    display: inline;
+    color: rgb(17, 149, 185) !important;
+    text-decoration: underline;
+    border-radius: 5px;
+    border-style: double;
+    padding: 2px;
+}
+.home {
+    display: inline;
+    color: rgb(150, 25, 255) !important;
+    text-decoration: none;
+    border-radius: 5px;
+    border-style: double;
+    padding: 2px;
+}

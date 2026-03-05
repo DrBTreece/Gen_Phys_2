@@ -60,13 +60,37 @@
             Here we will consider how to determine the (Cartesian) components of the field vector.
         </p>
     </div>
-      <img src="/Gen_Phys_2/img/1_2_1_Field_Direction_Components.png" width="451" height="259">
     <div>
+      <img src="/Gen_Phys_2/img/1_2_1_Field_Direction_Components.png" width="451" height="259">
     </div>
     <div>
         <p>
             The trick is that the displacement vector, starting at the charge and ending at the "field point" has the same direction as the field vector.
-            Therefore, the right triangles formed by the components of both vectors are <i>similar</i>.
+            Therefore, the right triangles formed by the components of these vectors are <i>similar</i>.
+            This means that they as the same shape, just scaled differently.
+        </p>
+    </div>
+    <div>
+      <img src="/Gen_Phys_2/img/1_2_2_Compare_E_and_r.png" width="456" height="294">
+    </div>
+    <div>
+        <p>
+            The implications of this geometric fact are that the ratios of the side lengths of these two triangle are equal.
+            \[ \frac{E_x}{E} = \frac{r_x}{r} \]
+            \[ \frac{E_y}{E} = \frac{r_y}{r} \]
+        </p>
+    </div>
+    <div>
+        <p>
+            The equations provided above are sufficient for computing the electric field vector, if you have the components of the displacement vector and the field magnitude.
+            However, we can combine these equations into a single vector equation that nicely encapsulates the relationship between the field this displacement vector.
+            \[ \vec{E} = E_x \hat{\imath} + E_y \hat{\jmath}  = E \left( \frac{r_x \hat{\imath} + r_y \hat{\jmath}}{r} \right) = E \, \hat{r} \]
+        </p>
+    </div>
+        <p>
+            In the final expression, the symbol \(\hat{r}\) is the direction vector of the displacement vector.
+            Thus, this equation nicely shows the electric field of a point charge can be broken into two parts:
+            its magnitude and its direction, which is the same as the direction of the displacement vector.
         </p>
     </div>
       <div id="nav_links" class="nav-bar">
@@ -78,8 +102,6 @@
       <div class="nav-bar-link-spacer"></div>
       <span class="nav_desktop_extra-null"> Next Section</span>
       
-    </div>
-    <div>      
     </div>
 </body>
 </html>

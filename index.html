@@ -2,39 +2,8 @@
 <title>General Physics II Homepage</title>
 <head>
     <h1>General Physics II Homepage</h1>
+    <link type="text/css" href="/Gen_Phys_2/css/nav.css" rel="stylesheet" />
 </head>
-<style>
-    .flex-container {
-      /* We first create a flex layout context */
-      display: flex;
-      
-      /* Then we define the flow direction
-         and if we allow the items to wrap
-       * Remember this is the same as:
-       * flex-direction: row;
-       * flex-wrap: wrap;
-       */
-      flex-flow: row wrap;
-      
-      /* Then we define how is distributed the remaining space */
-      /*justify-content: space-around;*/
-      
-      padding: 0;
-      margin: 0;
-      list-style: none;
-    }
-    .slidecontainer {
-      width: 30%; /* Width of the outside container */
-      flex: 1 auto;
-    }
-    .slidecontainer2 {
-        width: 10%; /* Width of the outside container */
-        flex: 1 auto;
-      }
-    .bottom-one {
-       margin-bottom: 1cm;
-    }
-</style>
 <body>
     <div>
       <p>This webpage is a companion to the Phys 202 course.</p>
@@ -49,10 +18,16 @@
     <nav class="toc" aria-labelledby="toc-label">
 	<h2 id="toc-label">Course Contents</h2>
 	<ul>
-		<li>Charges and Fields
+		<li>Charges and Electric Fields
             <ul>
                 <li><a href="/Gen_Phys_2/Electric_Fields/Field_Definitions.html">Electric Fields</a></li>
                 <li><a href="/Gen_Phys_2/Electric_Fields/Direction_From_Point_Charge.html">Direction for the Field of a Point Charge</a></li>
+            </ul>
+        </li>
+        <div class="vert-spacer"></div>
+		<li>Magnetic Fields
+            <ul>
+                <li><a href="/Gen_Phys_2/Magnetic_Fields/Cyclotron_Simulation.html">Cyclotron Simulation</a></li>
             </ul>
         </li>
 	</ul>
@@ -68,55 +43,6 @@
 
     var elec_Theta = 0;
     var orbital_Radius = 100;
-
-    // function draw_arrow(x,y, dx, dy, color='#000000') {
-    //     let arrow_directon = Math.atan2(dy, dx);
-    //     let arrhd_dx1 = 15*Math.cos(arrow_directon + 5*Math.PI/6);
-    //     let arrhd_dy1 = 15*Math.sin(arrow_directon + 5*Math.PI/6);
-    //     let arrhd_dx2 = 15*Math.cos(arrow_directon - 5*Math.PI/6);
-    //     let arrhd_dy2 = 15*Math.sin(arrow_directon - 5*Math.PI/6);
-
-    //     ctx.strokeStyle=color;
-    //     ctx.lineWidth=2;
-    //     ctx.beginPath();
-    //     ctx.moveTo(x,y);
-    //     ctx.lineTo(x+dx, y+dy);
-    //     ctx.stroke();
-        
-    //     ctx.beginPath();
-    //     ctx.moveTo(x + dx + arrhd_dx1, y + dy + arrhd_dy1);
-    //     ctx.lineTo(x+dx, y+dy);
-    //     ctx.lineTo(x + dx + arrhd_dx2, y + dy + arrhd_dy2);
-    //     ctx.stroke();
-    // }
-
-    // function draw_H() {
-    //     ctx.beginPath();
-    //     ctx.arc(WIDTH/2, HEIGHT/2, 10, 0, 2*Math.PI);
-    //     ctx.fillStyle='#DD4444';
-    //     ctx.fill();
-        
-    //     ctx.font = "20px Times";
-    //     ctx.fillStyle='#FFFFFF';
-    //     ctx.textBaseline='middle';
-    //     ctx.textAlign='center';
-    //     ctx.fillText("+", WIDTH/2, HEIGHT/2);
-    // }
-
-    // function draw_elec(theta) {
-    //     let x = orbital_Radius*Math.cos(theta);
-    //     let y = orbital_Radius*Math.sin(theta);
-    //     ctx.beginPath();
-    //     ctx.arc(WIDTH/2 + x, HEIGHT/2 - y, 10, 0, 2*Math.PI);
-    //     ctx.fillStyle='#444444';
-    //     ctx.fill();
-        
-    //     ctx.font = "20px Times";
-    //     ctx.fillStyle='#FFFFFF';
-    //     ctx.textBaseline='middle';
-    //     ctx.textAlign='center';
-    //     ctx.fillText("-", WIDTH/2 + x, HEIGHT/2 - y);
-    // }
 
     function draw_ring_of_field(){
         for (i = 0; i< 2*Math.PI; i+= Math.PI/10) {

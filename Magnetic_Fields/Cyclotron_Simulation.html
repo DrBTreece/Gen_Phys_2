@@ -1,0 +1,367 @@
+<html>
+<title>Charges Create Fields</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>MathJax example</title>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
+  </script>
+  <h1>Cyclotron Simulation</h1>
+  <link type="text/css" href="/Gen_Phys_2/css/nav.css" rel="stylesheet" />
+</head>
+<style>
+    .flex-container {
+      /* We first create a flex layout context */
+      display: flex;
+      
+      /* Then we define the flow direction
+         and if we allow the items to wrap
+       * Remember this is the same as:
+       * flex-direction: row;
+       * flex-wrap: wrap;
+       */
+      flex-flow: row wrap;
+      
+      /* Then we define how is distributed the remaining space */
+      /*justify-content: space-around;*/
+      
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .slidecontainer {
+      width: 30%; /* Width of the outside container */
+      flex: 1 auto;
+    }
+    .slidecontainer2 {
+        width: 10%; /* Width of the outside container */
+        flex: 1 auto;
+      }
+    .bottom-one {
+       margin-bottom: 1cm;
+    }
+</style>
+<body>
+<!------------------>
+<!------------------>
+<!------------------>
+  <div id="nav_links" class="nav-bar">
+      <span class="nav_desktop_extra-null"> Prev. Section</span>
+      <div class="nav-bar-link-spacer"></div>
+
+      <a href="/Gen_Phys_2/index.html" class="home"> Home</a>
+      
+      <div class="nav-bar-link-spacer"></div>
+      <div class="nav-bar-link-spacer"></div>
+      <span class="nav_desktop_extra-null"> Next Section</span>
+  </div>
+<!------------------>
+<!------------------>
+<!------------------>
+  <canvas id="Canvas1" width="800" height="600"></canvas>
+<div class="bottom-one"><p>Radius: <span id="TOP">33333</span> mm</p></div>
+<ul class="flex-container">
+    <div class="slidecontainer"></div>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="28" value="1" step="1" class="slider" id="BField">
+                <p>Field: <span id="BVALUE">1</span> mT</p>
+        </div>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="10" value="1" step="1" class="slider" id="SPEED">
+                <p>Speed: <span id="SPEEDVALUE">1</span> m/s</p>
+        </div>
+</ul>
+<p>Type of charge: <span id="TEMPQ"> </span></p>
+<ul class="flex-container">
+  <div class="slidecontainer2">
+  <form>
+    <input type="radio" id="POS" name="QQQ" value="1" onclick="handleClick(this);" checked="checked">
+    <label for="POS">Positive</label><br>
+    <input type="radio" id="NEG" name="QQQ" value="-1" onclick="handleClick(this);">
+    <label for="NEG">Negative</label>
+  </form>
+  </div>
+  <div class="slidecontainer2">
+      <input type="range" min="1" max="10" value="1" step="1" class="slider" id="QMAG">
+          <p>Charge: <span id="QVALUE">1</span> nC</p>
+  </div>
+  <div class="slidecontainer2">
+      <input type="range" min="1" max="10" value="1" step="1" class="slider" id="M">
+          <p>Mass: <span id="MVALUE">1</span> pg</p>
+  </div>
+</ul>
+<!------------------>
+<!------------------>
+<!------------------>
+  <div id="nav_links" class="nav-bar">
+      <span class="nav_desktop_extra-null"> Prev. Section</span>
+      <div class="nav-bar-link-spacer"></div>
+
+      <a href="/Gen_Phys_2/index.html" class="home"> Home</a>
+      
+      <div class="nav-bar-link-spacer"></div>
+      <span class="nav_desktop_extra-null"> Next Section</span>
+    </div>
+<!------------------>
+<!------------------>
+<!------------------>
+<!------------------>
+<!------------------>
+<!------------------>
+<!------------------>
+<script>
+    var Canvas;
+    var ctx;
+    var WIDTH;
+    var HEIGHT;
+    
+    var MAXBDENSITY = 30;
+    var MINBDENSITY = 189;
+    var BFIELDSLIDER = document.getElementById("BField");
+    var BFIELDSLIDERVALUE;
+    var BSPACING;
+    var BVALUE = document.getElementById("BVALUE");
+    var MAGFIELD;
+    
+    var SSLIDER = document.getElementById("SPEED");
+    var SVALUE = document.getElementById("SPEEDVALUE");
+    var SPEED;
+    
+    var QQQ = document.getElementsByName("QQQ");
+    var signQ = 1;
+    
+    var QSLIDER = document.getElementById("QMAG");
+    var QVALUE = document.getElementById("QVALUE");
+    var Q;
+    
+    var MSLIDER = document.getElementById("M");
+    var MVALUE = document.getElementById("MVALUE");
+    var M;
+    var R;
+    
+    var TEMP = document.getElementById("TOP");
+    
+    function rad_to_screen(r) {
+        
+        // values range from 0.01 to 10 000
+        // screen radii range from 40 to 280
+        // exponent ranges:
+        // (-2,-1): 40--80
+        // (-1, 0): 80--120
+        // (0, 1):  120--160
+        // (1, 2):  160--200
+        // (2, 3):  200--240
+        // (3, 4):  240--280
+        
+        // Determine exponent
+        e = Math.floor(Math.log10(r));
+        
+        // Determine coefficient
+        c = r/(10**e);
+        
+        // the output falls in a range based on the exponent
+        // out/40 = e + 3
+        // adjust for coefficient
+        out = 40*(e+3) + 4*(c-1);
+        return out;
+    }
+        
+    function handleClick(QQQ) {
+        signQ = QQQ.value;
+        TEMPQ.innerHTML = signQ;
+        //draw_B_FIELD(BSPACING);
+        //draw_path(R,signQ);
+    }
+    
+    function bspacing(s, v) {
+        return MINBDENSITY - (MINBDENSITY - MAXBDENSITY)*(v - s.min)/(s.max-s.min);
+    }
+    
+    function magfield(v) {
+        f = (v-1)%9;
+        d = Math.trunc((v-1)/9);
+        //d = Math.floor(0.1*(v-1));
+        r = (1+f)*10**(d-3);
+        return +r.toFixed(3);
+    }
+    
+    function radius(q, v, b, m) {
+        r = (m*v)/(q*b);
+        e = Math.floor(Math.log10(r));
+        f = 10**(e-3)
+        r = Math.round(r/f);
+        r = r*f;
+        if (f > 1) {
+            return r;
+        } else {
+            return r.toFixed(3-e);
+        }
+    }
+    
+    function init() {
+      Canvas = document.getElementById("Canvas1");
+      ctx1 = Canvas.getContext( '2d' );
+      WIDTH = Canvas.width;
+      HEIGHT = Canvas.height;
+      
+      BFIELDSLIDERVALUE = BFIELDSLIDER.value;
+      BSPACING = bspacing(BFIELDSLIDER, BFIELDSLIDERVALUE);
+      MAGFIELD = magfield(BFIELDSLIDERVALUE);
+      BVALUE.innerHTML = MAGFIELD;
+      
+      SPEED = SSLIDER.value;
+      SVALUE.innerHTML = SPEED;
+      
+      for (let i=0; i<QQQ.length; i++) {
+          if (QQQ[i].checked) {
+              signQ=QQQ[i].value;
+//              TEMPQ.innerHTML=signQ;
+          }
+      }
+      
+      Q = QSLIDER.value;
+      QVALUE.innerHTML = Q;
+      
+      M = (MSLIDER.value)/10;
+      MVALUE.innerHTML = M.toFixed(1);
+      
+      R = radius(Q, SPEED, MAGFIELD, M);
+      TEMP.innerHTML = R;
+    }
+    init();
+    
+    /*------------------*/
+    function draw_B_FIELD(spacing) {
+      ctx1.clearRect(0, 0, WIDTH, HEIGHT);
+      ctx1.lineWidth=3;
+      ctx1.strokeStyle="#BBBBBB";
+      ctx1.fillStyle="#BBBBBB";
+
+      for (let ix = 0.5*(WIDTH+spacing); ix < WIDTH-12; ix+=spacing) {
+        for (let iy = 0.5*(HEIGHT+spacing); iy < HEIGHT-12; iy+=spacing) {
+
+          ctx1.beginPath();
+          ctx1.arc(ix, iy, 10, 0, 2*Math.PI);
+          ctx1.stroke();
+          ctx1.beginPath();
+          ctx1.arc(WIDTH - ix, iy, 10, 0, 2*Math.PI);
+          ctx1.stroke();
+          ctx1.beginPath();
+          ctx1.arc(ix, HEIGHT - iy, 10, 0, 2*Math.PI);
+          ctx1.stroke();
+          ctx1.beginPath();
+          ctx1.arc(WIDTH - ix, HEIGHT - iy, 10, 0, 2*Math.PI);
+          ctx1.stroke();
+          
+          ctx1.beginPath();
+          ctx1.arc(ix, iy, 5, 0, 2*Math.PI);
+          ctx1.fill();
+          ctx1.beginPath();
+          ctx1.arc(WIDTH - ix, iy, 5, 0, 2*Math.PI);
+          ctx1.fill();
+          ctx1.beginPath();
+          ctx1.arc(ix, HEIGHT - iy, 5, 0, 2*Math.PI);
+          ctx1.fill();
+          ctx1.beginPath();
+          ctx1.arc(WIDTH - ix, HEIGHT - iy, 5, 0, 2*Math.PI);
+          ctx1.fill();
+        }
+      }
+    }
+    //draw_B_FIELD(BSPACING);
+    /*------------------*/
+    
+    BFIELDSLIDER.oninput = function() {
+      BFIELDSLIDERVALUE = this.value;
+      BSPACING = bspacing(this, BFIELDSLIDERVALUE);
+      //draw_B_FIELD(BSPACING);
+      //draw_path(R,signQ);
+      MAGFIELD = magfield(BFIELDSLIDERVALUE);
+      //BVALUE.innerHTML = BFIELDSLIDERVALUE;
+      BVALUE.innerHTML = MAGFIELD;
+      
+      R = radius(Q, SPEED, MAGFIELD, M);
+      TEMP.innerHTML = R;
+    }
+    
+    SSLIDER.oninput = function() {
+      SPEED = this.value;
+      SVALUE.innerHTML = SPEED;
+      
+      R = radius(Q, SPEED, MAGFIELD, M);
+      TEMP.innerHTML = R;
+    }
+    
+    QSLIDER.oninput = function() {
+      Q = QSLIDER.value;
+      QVALUE.innerHTML = Q;
+      
+      R = radius(Q, SPEED, MAGFIELD, M);
+      TEMP.innerHTML = R;
+    }
+    
+    MSLIDER.oninput = function() {
+      M = (MSLIDER.value)/10;
+      MVALUE.innerHTML = M.toFixed(1);
+      
+      R = radius(Q, SPEED, MAGFIELD, M);
+      TEMP.innerHTML = R;
+    }
+    
+    
+    function draw_path(r,sq) {
+        ctx1.beginPath();
+        ctx1.arc(0.5*WIDTH, 0.5*HEIGHT, rad_to_screen(r), 0, 2*Math.PI);
+        if (sq == 1) {
+            ctx1.strokeStyle="#FF8888";
+        } else {
+            ctx1.strokeStyle="#8888FF";
+        }
+        ctx1.lineWidth=2;
+        ctx1.stroke();
+    }
+    //draw_path(R,signQ);
+    
+    
+    var QTHETA = 0;
+    
+    function draw_charge(r, theta, sq, speed) {
+      qt = theta + 0.003*speed*sq;
+      if (sq == 1) {
+        ctx1.fillStyle="#EE6666";
+      } else {
+        ctx1.fillStyle="#6666EE";
+      }
+      ctx1.beginPath();
+      ctx1.arc(0.5*WIDTH + rad_to_screen(r)*Math.cos(qt), 0.5*HEIGHT + rad_to_screen(r)*Math.sin(qt), 10, 0, 2*Math.PI);
+      ctx1.fill();
+      
+      return qt;
+    }
+    
+    
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+let lastTime = null;
+function frame(time) {
+  if (lastTime != null) {
+    updateAnimation(Math.min(100, time - lastTime) / 1000);
+  }
+  lastTime = time;
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+
+function updateAnimation(step) {
+    draw_B_FIELD(BSPACING);
+    draw_path(R,signQ);
+    QTHETA = draw_charge(R, QTHETA, signQ, SPEED);
+}
+
+</script>
+</body>
+</html>

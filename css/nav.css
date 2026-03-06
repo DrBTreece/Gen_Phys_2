@@ -78,3 +78,9 @@ a {
     border-style: double;
     padding: 2px;
 }
+
+
+.vert-spacer {
+    display: block;
+    height: 5px;
+}

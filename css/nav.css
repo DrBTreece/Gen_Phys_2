@@ -84,3 +84,8 @@ a {
     display: block;
     height: 5px;
 }
+
+.slider-width300
+{
+    width:300px;
+}

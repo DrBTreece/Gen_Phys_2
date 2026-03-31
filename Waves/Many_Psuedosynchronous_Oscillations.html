@@ -1,0 +1,373 @@
+<html>
+<title>Connection Between Oscillations and Waves</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>MathJax example</title>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
+  </script>
+  <h1>Connection Between Oscillations and Waves</h1>
+  <link type="text/css" href="/Gen_Phys_2/css/nav.css" rel="stylesheet" />
+</head>
+<style>
+    .flex-container {
+      /* We first create a flex layout context */
+      display: flex;
+      
+      /* Then we define the flow direction
+         and if we allow the items to wrap
+       * Remember this is the same as:
+       * flex-direction: row;
+       * flex-wrap: wrap;
+       */
+      flex-flow: row wrap;
+      
+      /* Then we define how is distributed the remaining space */
+      /*justify-content: space-around;*/
+      
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .slidecontainer {
+      width: 30%; /* Width of the outside container */
+      flex: 1 auto;
+    }
+    .slidecontainer2 {
+        width: 10%; /* Width of the outside container */
+        flex: 1 auto;
+      }
+    .bottom-one {
+       margin-bottom: 1cm;
+    }
+</style>
+<body>
+<!------------------>
+<!------------------>
+<!------------------>
+  <div id="nav_links" class="nav-bar">
+      <span class="nav_desktop_extra-null"> Prev. Section</span>
+      <div class="nav-bar-link-spacer"></div>
+
+      <a href="/Gen_Phys_2/index.html" class="home"> Home</a>
+      
+      <div class="nav-bar-link-spacer"></div>
+      <div class="nav-bar-link-spacer"></div>
+      <span class="nav_desktop_extra-null"> Next Section</span>
+  </div>
+<!------------------>
+<!------------------>
+<!------------------>
+  <canvas id="Canvas1" width="800" height="240"></canvas>
+<!------------------>
+<!------------------>
+<!------------------>
+<ul class="flex-container">
+  <div class="slidecontainer">
+    <input type="range" min="1" max="80" value="1" step="1" class="slider-width300" id="Number_Oscillators">
+    <p>Number of Oscillators: <span id="N_Osc_Val">???</span></p>
+  </div>
+<!------------------>
+  <div class="slidecontainer">
+    <input type="range" min="0" max="1" value="0" step="1" class="slider" id="Show_Wave">
+    <p>Show the wave?<br><span id="Show_Wave_Val">???</span></p>
+  </div>
+</ul>
+<div class="vert-spacer"></div>
+<div class="vert-spacer"></div>
+<div class="vert-spacer"></div>
+<div class="vert-spacer"></div>
+<!------------------>
+<!------------------>
+<!------------------>
+<ul class="flex-container">
+  <div class="slidecontainer">
+    <input type="range" min="100" max="1600" value="200" step="50" class="slider" id="Wavelength">
+    <p>Wavelength: <span id="Wave_Len_Val">???</span> pixels</p>
+  </div>
+<!------------------>
+  <div class="slidecontainer">
+    <input type="range" min="0.5" max="4" value="1" step="0.1" class="slider" id="Period">
+    <p>Period: <span id="Period_Val">???</span> approx-seconds</p>
+  </div>
+</ul>
+<!------------------>
+<!------------------>
+<!------------------>
+<ul class="flex-container">
+  <div class="slidecontainer">
+    <input type="range" min="10" max="100" value="50" step="5" class="slider" id="Amplitude">
+    <p>Amplitude: <span id="Amp_Val">???</span> pixels</p>
+  </div>
+<!------------------>
+  <div class="slidecontainer">
+    <input type="range" min="0.25" max="2" value="1" step="0.05" class="slider" id="Natural_Frequency">
+    <p>Natural Frequency: <span id="Freq_Val">???</span> \(s^{-1}\)</p>
+  </div>
+</ul>
+<!------------------>
+<!------------------>
+<!------------------>
+<ul class="flex-container">
+  <div class="slidecontainer">
+    <input type="range" min="-1" max="1" value="1" step="2" class="slider" id="Direction">
+    <p>Wave is traveling: <br><span id="Dir_Val">???</span></p>
+  </div>
+<!------------------>
+  <div class="slidecontainer">
+    <input type="range" min="1.571" max="12.566" value="6.28" step="0.314" class="slider" id="Angular_Frequency">
+    <p>Natural Frequency: <span id="Ang_Freq_Val">???</span> \(rad/s\)</p>
+  </div>
+</ul>
+<!------------------
+<ul class="flex-container">
+    <div class="slidecontainer"></div>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="28" value="1" step="1" class="slider" id="BField">
+                <p>Field: <span id="BVALUE">1</span> mT</p>
+        </div>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="10" value="1" step="1" class="slider" id="SPEED">
+                <p>Speed: <span id="SPEEDVALUE">1</span> m/s</p>
+        </div>
+</ul>
+<p>Type of charge: <span id="TEMPQ"> </span></p>
+<ul class="flex-container">
+  <div class="slidecontainer2">
+  <form>
+    <input type="radio" id="POS" name="QQQ" value="1" onclick="handleClick(this);" checked="checked">
+    <label for="POS">Positive</label><br>
+    <input type="radio" id="NEG" name="QQQ" value="-1" onclick="handleClick(this);">
+    <label for="NEG">Negative</label>
+  </form>
+  </div>
+  <div class="slidecontainer2">
+      <input type="range" min="1" max="10" value="1" step="1" class="slider" id="QMAG">
+          <p>Charge: <span id="QVALUE">1</span> nC</p>
+  </div>
+  <div class="slidecontainer2">
+      <input type="range" min="1" max="10" value="1" step="1" class="slider" id="M">
+          <p>Mass: <span id="MVALUE">1</span> pg</p>
+  </div>
+</ul>
+-->
+<!------------------>
+<!------------------>
+<!------------------>
+  <div id="nav_links" class="nav-bar">
+      <span class="nav_desktop_extra-null"> Prev. Section</span>
+      <div class="nav-bar-link-spacer"></div>
+
+      <a href="/Gen_Phys_2/index.html" class="home"> Home</a>
+      
+      <div class="nav-bar-link-spacer"></div>
+      <span class="nav_desktop_extra-null"> Next Section</span>
+    </div>
+<!------------------>
+<!------------------>
+<!------------------>
+<!------------------>
+<!------------------>
+<!------------------>
+<!------------------>
+<script>
+    var Canvas;
+    var ctx;
+    var WIDTH;
+    var HEIGHT;
+
+
+    var NOsc = 1;
+    var NOscMax = 80;
+    var Amp = 50;
+    var Period = 1;
+    var Wave_Len = 100;
+    var Dir = 1;
+    var Phase = 0;
+    
+    var show_waveform_bool=0;
+    var sim_time = 0;
+
+
+
+    var NOscValue = document.getElementById("N_Osc_Val");
+    var NOscSlider = document.getElementById("Number_Oscillators");
+    NOsc = NOscSlider.value;
+    NOscValue.innerHTML = NOsc;
+    NOscSlider.oninput = function() {
+      NOsc = NOscSlider.value;
+      NOscValue.innerHTML = NOsc;
+    }
+
+    
+    var ShowWaveValue = document.getElementById("Show_Wave_Val");
+    var ShowWaveSlider = document.getElementById("Show_Wave");
+    show_waveform_bool = ShowWaveSlider.value;
+    if (show_waveform_bool==1) {
+      ShowWaveValue.innerHTML = "Yes";
+    } else {
+      ShowWaveValue.innerHTML = "No";
+    }
+    ShowWaveSlider.oninput = function() {
+      show_waveform_bool = ShowWaveSlider.value;
+      if (show_waveform_bool==1) {
+        ShowWaveValue.innerHTML = "Yes";
+      } else {
+        ShowWaveValue.innerHTML = "No";
+      }
+    }
+
+
+
+    var PerValue = document.getElementById("Period_Val");
+    var PerSlider = document.getElementById("Period");
+    Period = PerSlider.value;
+    PerValue.innerHTML = Period;
+
+    var LamValue = document.getElementById("Wave_Len_Val");
+    var LamSlider = document.getElementById("Wavelength");
+    Wave_Len = LamSlider.value;
+    LamValue.innerHTML = Wave_Len;
+    LamSlider.oninput = function() {
+      Wave_Len = LamSlider.value;
+      LamValue.innerHTML = Wave_Len;
+    }
+
+    var AmpValue = document.getElementById("Amp_Val");
+    var AmpSlider = document.getElementById("Amplitude");
+    Amp = AmpSlider.value;
+    AmpValue.innerHTML = Amp;
+    AmpSlider.oninput = function() {
+      Amp = AmpSlider.value;
+      AmpValue.innerHTML = Amp;
+    }
+
+    var DirValue = document.getElementById("Dir_Val");
+    var DirSlider = document.getElementById("Direction");
+    Dir = DirSlider.value;
+    if (Dir==1) {
+      DirValue.innerHTML = "left to right";
+    } else if (Dir==-1) {
+      DirValue.innerHTML = "right to left";
+    } else { 
+      DirValue.innerHTML = "something is wrong!";
+    }
+    DirSlider.oninput = function() {
+      Dir = DirSlider.value;
+      if (Dir==1) {
+       DirValue.innerHTML = "left to right";
+      } else if (Dir==-1) {
+        DirValue.innerHTML = "right to left";
+      } else { 
+        DirValue.innerHTML = "something is wrong!";
+      }
+    }
+
+    var FreqValue = document.getElementById("Freq_Val");
+    var FreqSlider = document.getElementById("Natural_Frequency");
+    FreqSlider.value = 1/Period;
+    FreqValue.innerHTML = (1/Period).toFixed(3);
+
+    var AngFreqValue = document.getElementById("Ang_Freq_Val");
+    var AngFreqSlider = document.getElementById("Angular_Frequency");
+    AngFreqSlider.value = 2*Math.PI/Period;
+    AngFreqValue.innerHTML = (2*Math.PI/Period).toFixed(3);
+
+
+    PerSlider.oninput = function() {
+      Period = PerSlider.value;
+      PerValue.innerHTML = Period;
+      FreqSlider.value = 1/Period;
+      FreqValue.innerHTML = (1/Period).toFixed(3);
+      AngFreqSlider.value = 2*Math.PI/Period;
+      AngFreqValue.innerHTML = (2*Math.PI/Period).toFixed(3);
+    }
+    FreqSlider.oninput = function() {
+      Period = 1/FreqSlider.value;
+      PerValue.innerHTML = (Period).toFixed(3);
+      PerSlider.value = Period;
+      FreqValue.innerHTML = FreqSlider.value;
+      AngFreqSlider.value = 2*Math.PI*FreqSlider.value;
+      AngFreqValue.innerHTML = (2*Math.PI*FreqSlider.value).toFixed(3);
+    }
+    AngFreqSlider.oninput = function() {
+      Period = 2*Math.PI/AngFreqSlider.value;
+      PerValue.innerHTML = (Period).toFixed(3);
+      PerSlider.value = Period;
+      FreqSlider.value = AngFreqSlider.value/(2*Math.PI);
+      FreqValue.innerHTML = (1/Period).toFixed(3);
+      AngFreqValue.innerHTML = AngFreqSlider.value;
+    }
+
+
+
+
+
+    function Eq_of_Wave(x,t,A,L,T,phi) {
+      return A*Math.sin(2*Math.PI*( (x/L) - Dir*(t/T) ) + phi);
+    }
+
+    function draw_Waveform(t) {
+      ctx.beginPath();
+      ctx.moveTo(0, 0.5*HEIGHT - Eq_of_Wave(0, t, Amp, Wave_Len, Period, Phase));
+      for (let i = 1; i<=WIDTH; i++) {
+        ctx.lineTo(i, 0.5*HEIGHT - Eq_of_Wave(i, t, Amp, Wave_Len, Period, Phase));
+      }
+      ctx.lineWidth=2;
+      ctx.strokeStyle='#222288';
+      ctx.stroke();
+    }
+
+    function draw_Oscillator(x,t) {
+      ctx.beginPath();
+      ctx.arc(x, 0.5*HEIGHT - Eq_of_Wave(x, t, Amp, Wave_Len, Period, Phase), 5, 0, 2*Math.PI);
+      ctx.fillStyle='#882222';
+      ctx.fill();
+    }
+    
+    function draw_screen(t) {
+      ctx.clearRect(0,0,WIDTH,HEIGHT);
+      if (show_waveform_bool==1) {
+        draw_Waveform(t);
+      }
+      for (let i = 1; i <= NOsc; i++) {
+        draw_Oscillator(WIDTH*i / NOscMax, t);
+      }
+    }
+    
+    function init() {
+      Canvas = document.getElementById("Canvas1");
+      ctx = Canvas.getContext( '2d' );
+      WIDTH = Canvas.width;
+      HEIGHT = Canvas.height;
+      draw_screen(0);
+    }
+    init();
+    
+    
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+let lastTime = null;
+function frame(time) {
+  if (lastTime != null) {
+    updateAnimation(Math.min(100, time - lastTime) / 1000);
+  }
+  lastTime = time;
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+
+function updateAnimation(step) {
+  sim_time += 0.0166;
+  //0.0166
+
+  draw_screen(sim_time);
+}
+
+</script>
+</body>
+</html>

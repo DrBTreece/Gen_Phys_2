@@ -59,13 +59,19 @@
 <!------------------>
 <!------------------>
 <!------------------>
-  <canvas id="Canvas1" width="800" height="240"></canvas>
+  <canvas id="Canvas1" width="800" height="250"></canvas>
 <!------------------>
 <!------------------>
 <!------------------>
 <ul class="flex-container">
+  <div class="right-container">
+    <button class="button" id="start_stop" onclick="f_start_stop()">Start/Stop</button>
+    <button class="button" id="reset" onclick="f_reset()">Reset</button>
+  </div>
+</ul>
+<ul class="flex-container">
   <div class="slidecontainer">
-    <input type="range" min="1" max="80" value="1" step="1" class="slider-width300" id="Number_Oscillators">
+    <input type="range" min="0" max="80" value="1" step="1" class="slider-width300" id="Number_Oscillators">
     <p>Number of Oscillators: <span id="N_Osc_Val">???</span></p>
   </div>
 <!------------------>
@@ -302,6 +308,19 @@
 
 
 
+    var boolRunning = false;
+    function f_start_stop() {
+      boolRunning = !boolRunning;
+    }
+
+    function f_reset() {
+      boolRunning = false;
+      sim_time = 0;
+    }
+
+
+
+
 
 
     function Eq_of_Wave(x,t,A,L,T,phi) {
@@ -324,6 +343,20 @@
       ctx.arc(x, 0.5*HEIGHT - Eq_of_Wave(x, t, Amp, Wave_Len, Period, Phase), 5, 0, 2*Math.PI);
       ctx.fillStyle='#882222';
       ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(x, 0.5*HEIGHT - Eq_of_Wave(x, t, Amp, Wave_Len, Period, Phase));
+      ctx.lineTo(x, 0.5*HEIGHT);
+      ctx.lineWidth=1;
+      ctx.strokeStyle='#882222';
+      ctx.stroke();
+    }
+
+    function record_time(t){
+      ctx.textBaseline="bottom";
+      ctx.textAlign="right";
+      ctx.fillStyle='#000000';
+      ctx.font="15pt Arial";
+      ctx.fillText(t.toFixed(3) + " s",WIDTH, HEIGHT);
     }
     
     function draw_screen(t) {
@@ -334,6 +367,7 @@
       for (let i = 1; i <= NOsc; i++) {
         draw_Oscillator(WIDTH*i / NOscMax, t);
       }
+      record_time(t);
     }
     
     function init() {
@@ -362,9 +396,8 @@ requestAnimationFrame(frame);
 
 
 function updateAnimation(step) {
-  sim_time += 0.0166;
-  //0.0166
-
+  if (boolRunning) {sim_time += 0.0166;}
+  if (sim_time>=30*Period) {sim_time=0;}
   draw_screen(sim_time);
 }
 

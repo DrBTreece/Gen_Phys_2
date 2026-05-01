@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ray Tracing Simulator</title>
+    <h1>How Lenses Form Images</h1>
+    <link type="text/css" href="/Gen_Phys_2/css/nav.css" rel="stylesheet" />
+    <link type="text/css" href="/Gen_Phys_2/css/canvas.css" rel="stylesheet" />
+</head>
+<body>
+<!------------------>
+<!------------------>
+<!------------------>
+  <div id="nav_links" class="nav-bar">
+      <span class="nav_desktop_extra-null"> Prev. Section</span>
+      <div class="nav-bar-link-spacer"></div>
+
+      <a href="/Gen_Phys_2/index.html" class="home"> Home</a>
+      
+      <div class="nav-bar-link-spacer"></div>
+      <div class="nav-bar-link-spacer"></div>
+      <span class="nav_desktop_extra-null"> Next Section</span>
+  </div>
+<!------------------>
+<!------------------>
+<!------------------>
+    <canvas id="Canvas1" width="800" height="600"></canvas>
+    <div>
+    <label id="Object_Position_Log" style="padding-left:15px;color:#5500FF">Object Position:</label>
+    <label id="Image_Position_Log" style="position:absolute;left:300px;color:#AA77FF">Image Position:</label>
+    </div><br>
+    <div>
+    <a style="padding-left:15px;padding-right:15px;color:#003366;">Focal Distance:</a>
+    <button style="color:#003366;" onclick="Down_F()"> - </button>
+    <label id="FLABEL" style="padding-left:15px;padding-right:15px;color:#003366;">F</label>
+    <button style="color:#003366;" onclick="Up_F()"> + </button>
+    </div><br>
+    <form style="padding-left:15px;color:#003366" novalidate>
+        <label for="F" style="padding-right:15px;">Manual Input For Focal Distance </label>
+        <input style="color:#003366;" type="number" id="F" name="F" value=5.0 step=0.5 min=-20 max=20 size="14"><br>
+    </form><br>
+    <div>
+        <a style="padding-left:15px;padding-right:15px;">Show Ray Tracing</a>
+        <button id="RayTrace" onclick="Ray_Visibility()">Hide</button>
+    </div><br>
+    <div>
+        <a style="padding-left:15px;padding-right:15px;">Show Flashlight</a>
+        <button id="Flashlight" onclick="Flashlight_Visibility()">Show</button>
+    </div>
+<!------------------>
+<!------------------>
+<!------------------>
+  <div id="nav_links" class="nav-bar">
+      <span class="nav_desktop_extra-null"> Prev. Section</span>
+      <div class="nav-bar-link-spacer"></div>
+
+      <a href="/Gen_Phys_2/index.html" class="home"> Home</a>
+      
+      <div class="nav-bar-link-spacer"></div>
+      <span class="nav_desktop_extra-null"> Next Section</span>
+    </div>
+<!------------------>
+<!------------------>
+<!------------------>
+    <script src="/Gen_Phys_2/src/Optics/Ray_Tracing_Simulator.js"></script>
+</body>
+</html>
